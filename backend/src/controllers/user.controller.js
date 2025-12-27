@@ -1,15 +1,23 @@
 import e from "express";
 import { getAllUsers, getUserById, createUser, updateUserById, deleteUserById } from "../services/user.service.js";
+import { trace } from '@opentelemetry/api';
 
-export const getUsers = (req, res) => {
+const tracer = trace.getTracer('user-controller-tracer');
+
+export const getUsers = async (req, res) => {
+    const span = tracer.startSpan('getUsers');
     try {
         const users = getAllUsers();
+        // Esto es un atributo personalizado
+        span.setAttribute('user.count', users.length);
         res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ message: 'Failed to retrieve users' });
+        res.status(500).json({ message: 'Internal server error' });
+    } finally {
+        // Es importante cerrar siempre el span
+        span.end();
     }
-    
-}
+};
 
 export const getUser = (req, res) => {
     try {

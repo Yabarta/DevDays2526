@@ -1,0 +1,119 @@
+openapi: 3.1.0
+info:
+  title: Isa DevDays Workshop API
+  description: This the API for the Isa DevDays Workshop.
+  version: 1.0.0
+
+servers:
+  - url: /
+    description: Development server
+
+tags:
+  - name: Users
+    description: Operations related to users
+
+paths:
+  /:
+    get:
+      summary: Root endpoint
+      description: Returns a welcome message.
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Hello, ISA DevDays 2025!"
+  /api/v1/users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieve a list of all users.
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Create a new user with the provided information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "201":
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+        "400":
+          description: Invalid input.
+  /api/v1/users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      description: Retrieve a user by their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the user to retrieve.
+      responses:
+        "200":
+          description: A single user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+        "404":
+          description: User not found.
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Delete a user by their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the user to delete.
+      responses:
+        "204":
+          description: User deleted successfully.
+        "404":
+          description: User not found.

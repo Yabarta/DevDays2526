@@ -1,4 +1,4 @@
-import { generateText } from '../services/openai.service.js' ; // or '../services/ollama.service.js' if we want to try Ollama
+import { generateText } from '../services/ollama.service.js'; ; // or '../services/ollama.service.js' if we want to try Ollama
 
 export const generateAIResponse = async (req, res) => {
     try {

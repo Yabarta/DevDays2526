@@ -8,13 +8,12 @@ export const getUsers = async (req, res) => {
     const span = tracer.startSpan('getUsers');
     try {
         const users = getAllUsers();
-        // Esto es un atributo personalizado
+        await new Promise(resolve => setTimeout(resolve, 100));
         span.setAttribute('user.count', users.length);
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     } finally {
-        // Es importante cerrar siempre el span
         span.end();
     }
 };

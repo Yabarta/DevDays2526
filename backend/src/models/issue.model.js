@@ -22,7 +22,10 @@ const issueSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    // TODO: Store the updatedAt field from the GitHub issue
+    updatedAt: {
+        type: Date,
+        required: true,
+    },
     title: {
         type: String,
         required: true,

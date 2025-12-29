@@ -5,6 +5,7 @@ import { bundle } from '@readme/openapi-parser';
 import { issueRouter } from './routes/issue.routes.js';
 import { auditRouter } from './routes/audit.routes.js';
 import { aiRouter } from './routes/ai.routes.js';
+import { githubRouter } from './routes/github.routes.js';
 import { telemetryRouter } from './routes/telemetry.routes.js';
 
 const app = express();
@@ -19,6 +20,7 @@ app.use('/api/v1', userRouter);
 app.use('/api/v1', issueRouter);
 app.use('/api/v1', auditRouter);
 app.use('/api/v1', aiRouter);
+app.use('/api/v1', githubRouter);
 
 
 bundle('src/docs/openapi.yaml')

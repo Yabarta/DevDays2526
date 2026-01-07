@@ -11,3 +11,20 @@ export const generateText = async (prompt) => {
     });
     return response.output_text;
 };
+
+export const generateSpeechFromText = async (text, options = {}) => {
+
+    const model = options.model || 'gpt-4o-mini-tts';
+    const voice = options.voice || 'alloy';
+    const format = options.format || 'wav';
+
+    const resp = await openai.audio.speech.create({
+        model,
+        voice,
+        input: text,
+        format,
+    });
+
+    const arrayBuffer = await resp.arrayBuffer();
+    return Buffer.from(arrayBuffer);
+};

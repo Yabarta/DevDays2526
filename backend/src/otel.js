@@ -56,12 +56,27 @@ const userCreationCounter = meter.createCounter('user_creation_count', {
     description: 'Counts number of users created',
     unit: "users",
 });
-export const addUser = (req, res) => {
-    userCreationCounter.add(1);
+// Histograma para medir la duración de peticiones HTTP en milisegundos
+const requestDurationHistogram = meter.createHistogram('http_request_duration_ms', {
+    description: 'Duration of HTTP requests',
+    unit: 'ms',
+});
+
+export const recordRequestDuration = (durationMs, attributes = {}) => {
     try {
-        const newUser = createUser(req.body);
-        res.status(201).json(newUser);
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        requestDurationHistogram.record(durationMs, attributes);
+    } catch (err) {
+        // no bloquear la aplicación si hay errores en métricas
+        console.error('Error recording metric', err);
     }
+};
+
+export const addUser = (req, res) => {
+        userCreationCounter.add(1);
+        try {
+                const newUser = createUser(req.body);
+                res.status(201).json(newUser);
+        } catch (error) {
+                res.status(500).json({ message: 'Internal server error' });
+        }
 };

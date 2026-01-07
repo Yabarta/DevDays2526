@@ -8,8 +8,9 @@ export const validateCreateUser = [
         .isString()
         .withMessage('Name must be a string')
         .isLength({ min: 3 })
-        .withMessage('Name must be at least 3 characters long'),
-        //TODO: Añadir máximo de 50 caracteres.
+        .withMessage('Name must be at least 3 characters long')
+        .isLength({ max: 50 })
+        .withMessage('Name must be at most 50 characters long'),
 
     // Middleware to handle validation errors
     (req, res, next) => {

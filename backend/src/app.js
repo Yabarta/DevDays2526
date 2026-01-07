@@ -1,5 +1,6 @@
 import express from 'express';
 import { userRouter } from './routes/user.routes.js';
+import metricsMiddleware from './middlewares/metrics.middleware.js';
 import swaggerUi from 'swagger-ui-express';
 import { bundle } from '@readme/openapi-parser';
 import { issueRouter } from './routes/issue.routes.js';
@@ -10,6 +11,7 @@ import { telemetryRouter } from './routes/telemetry.routes.js';
 
 const app = express();
 app.use(express.json());
+app.use(metricsMiddleware);
 
 app.get('/', (req, res) => {
     res.send('APP: Hello, ISA DevDays 2025!');

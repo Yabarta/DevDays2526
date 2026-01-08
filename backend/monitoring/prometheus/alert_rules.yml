@@ -1,0 +1,16 @@
+groups:
+  - name: http_latency_rules
+    rules:
+      - alert: HighHTTPAverageLatency
+        expr: |
+          (
+            increase(http_request_duration_ms_sum[1m])
+            /
+            increase(http_request_duration_ms_count[1m])
+          ) > 100
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High average HTTP latency (>{{ $value }}ms)"
+          description: "Average HTTP request duration over the last 1m is > 100 ms."

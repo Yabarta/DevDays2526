@@ -21,6 +21,7 @@
     "@opentelemetry/sdk-trace-base": "^2.2.0",
     "@opentelemetry/sdk-trace-node": "^2.2.0",
     "@opentelemetry/semantic-conventions": "^1.38.0",
+    "@opentelemetry/exporter-prometheus": "^0.208.0",
     "@readme/openapi-parser": "^5.4.0",
     "axios": "^1.13.2",
     "decircular": "^1.0.0",

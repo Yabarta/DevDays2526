@@ -9,6 +9,7 @@ import {
 } from '@opentelemetry/semantic-conventions';
 import { resourceFromAttributes } from '@opentelemetry/resources';
 import { ConsoleMetricExporter, MeterProvider, PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
+import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 import { metrics } from '@opentelemetry/api';
 import { SimpleExporter } from './simpleExporter.js';
 
@@ -46,6 +47,8 @@ const meterProvider = new MeterProvider({
       exporter: new ConsoleMetricExporter(),
       exportIntervalMillis: 5000,
     }),
+        // Prometheus exporter will expose a /metrics endpoint for scraping
+        new PrometheusExporter({ startServer: true, port: 9464, endpoint: '/metrics' }),
   ],
 });
 
